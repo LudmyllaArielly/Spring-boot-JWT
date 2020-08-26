@@ -1,0 +1,157 @@
+@charset "UTF-8";
+
+	#formTelefone{
+		margin-bottom: 100px;
+		}
+	
+	
+		#formPessoa{
+			
+		}
+		
+		 #formPesquisa{
+		
+		}
+		
+		 table{
+		/*margin-left: -50px;
+		width: 110%;*/
+		}
+		
+		#btnSalvar, #btnBuscar, .btn, .btn-large, .btn-small {
+		  
+		    font-weight: bold;
+		    font-size: 1em;
+		    background-color: #66bb6a !important;
+		    padding-right: 20px;
+		    margin-top:10px;
+		    margin-left: 20px
+		
+		}
+		#btnNovo{
+		 
+		    font-weight: bold;
+		    font-size: 1em;
+		    background-color: #42a5f5 !important;
+		    padding-left: 45px;
+		    padding-right: 45px;
+		    margin-top: 10px;
+		    margin-left: 20px;
+}
+
+		
+		nav {
+		   
+		   color: #fff;
+		    background-color: #26a69a !important;
+		    width: 130%;
+		    height: 56px;
+		    line-height: 56px;
+		    margin: auto -175px !important;
+
+}
+		    
+	
+	form input[type="submit"]{
+	color: white;
+	}
+	
+		
+		 #titulo{
+		font-size: 0.7em !important;
+		margin-left: 90px !important;
+		padding-top: 24px !important;
+		}
+		.container, .center, .tituloCad h5{
+		font-size: 1.4em !important;
+		color: #00695c !important;
+		}
+		
+		.material-icons.blue { color: #82b1ff; }
+		
+		.center,.infPessoa, p {
+		font-size: 1.8em;
+    color: #616161;;
+    font-family: initial;
+		}
+		
+		.highlight{
+			color: #616161!important;
+			font-size: 0.7em !important;
+			font-family: sans-serif;
+			margin-bottom: 40px;
+		
+		}
+		
+	/*	.msg {
+  width:30%;
+  border:none;
+  padding:10px;
+  margin: 20px;
+  color: grey;
+  border-radius: 3px;
+  text-align: center;
+}
+.msg-error {
+  // rouge
+  border-color: #d32f2f;
+  background-color: #ef5350;
+  color: white;
+}
+.msg-alert {
+  //orange
+   border-color: #ef6c00;
+  background-color: #ff9800;
+  color: white;
+}
+
+.msg-info{
+  border-color: #0288d1;
+  background-color: #29b6f6;
+  color: white;
+}
+	
+#message{
+	text-align: center;
+	
+}	*/
+
+
+div.msg span {
+    text-align: center;
+    width: 50%;
+    background-color: #e53935;
+    padding: 8px;
+    color: white;
+    font-size: 1em;
+    font-family: 'PT Sans', sans-serif;
+    opacity:0.9;
+       margin: 0 385px 0 385px;
+}
+	
+	
+	span#message{
+	color: #c62828;
+	font-size: 1em;
+	font-family: 'PT Sans', sans-serif;
+	background-color: #fffde7;
+	    width: 30%;
+    padding: 10px;
+	}	
+
+h6.titleLogin{
+	flex-direction: row;
+    margin-top: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 3%;
+    font-size: 1.3em;
+    font-weight: 600;
+}
+
+.teste{
+	background-color: red;
+}
+
+		

@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+	 <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+	<script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+	
+	<link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css">
+	<title>Cadastro Pessoa</title>
+	
+	<style type="text/css">
+		#formPessoa{
+			
+		}
+		
+		 #formPesquisa{
+		
+		}
+		
+		 table{
+		/*margin-left: -50px;
+		width: 110%;*/
+		}
+		
+		#btnSalvar, #btnBuscar, .btn, .btn-large, .btn-small {
+		  
+		    font-weight: bold;
+		    font-size: 1em;
+		    background-color: #66bb6a !important;
+		    padding-right: 20px;
+		    margin-top:10px;
+		    margin-left: 20px
+		
+		}
+		#btnNovo{
+		 
+		    font-weight: bold;
+		    font-size: 1em;
+		    background-color: #42a5f5 !important;
+		    padding-left: 45px;
+		    padding-right: 45px;
+		    margin-top: 10px;
+		    margin-left: 20px;
+}
+
+		
+		nav {
+		   
+		   color: #fff;
+		    background-color: #26a69a !important;
+		    width: 130%;
+		    height: 56px;
+		    line-height: 56px;
+		    margin: auto -175px !important;
+
+}
+		    
+	
+	form input[type="submit"]{
+	color: white;
+	}
+	
+		
+		#titulo{
+		font-size: 1em;
+		margin-left: 90px;
+		padding-top: 24px;
+		}
+		.tituloCad{
+		font-size: 1.5em;
+		color: #00695c;
+		}
+		
+		.material-icons.blue { color: #82b1ff; }
+	</style>
+</head>
+<body>
+<div class="container">
+
+	<nav class="navbar">
+		<div class="nav-wrapper col s10">
+			<a href="#" class="brand-logo">
+				<!--  <img alt="logo" src="/img/logo.png" width="90" height="70"></img>-->
+			</a>
+			<ul id="nav-mobile" class="right hide-on-med-and-down">
+				<li><a href="/">Inicio</a></li>
+				<li><a href="/cadastropessoa">Cadastro de Usuário</a></li>
+				<li><a href="/logout">Sair</a></li>			
+			</ul>
+			<h5 id="titulo">Spring Boot + Thymeleaf + Material Design Lite</h5>
+		</div>	
+	</nav>
+	<br/>
+	<br/>
+	<br/>
+
+	
+
+
+		<div class="center col s4" th:each="m : ${msg}">	
+			<span th:text="${m}"></span>
+		</div>
+
+  
+	<br/>
+	<h5 class="center tituloCad">Cadastro de Pessoas</h5>
+	<form id="formPessoa center" action="salvarpessoa" method="post" th:object="${pessoaobj}"
+	enctype="multipart/form-data">
+		 
+		 <div class="row">
+		 	 <div class="col s6">
+				<label for="id">Id:</label>
+				<input readonly="readonly" name="id" th:field="*{id}" id="id">
+			</div>
+		</div>
+		
+		<div class="row">
+			 <div class="input-field col s6">
+				<label for="nome" class="active">Nome:</label>
+				<input name="nome" th:field="*{nome}" id="nome" class="validate" type="text">
+			</div>
+			<div class="input-field  col s6">
+				<label for="sobrenome" class="active">Sobrenome:</label>
+				<input name="sobrenome" th:field="*{sobrenome}" id="sobrenome" type="text" class="validate">
+			</div>	
+		</div>
+		
+		<br/>
+		<div class="row">
+			<div class="input-field  col s4" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_TECNICO')">
+				<label for="idade" class="active">Idade:</label>
+				<input name="idade" th:field="*{idade}" id="idade" class="validate" type="number">
+			</div>
+			<div class="col s4">
+				<label for="sexo" class="active">Sexo:</label>
+				<select class="browser-default" th:field="*{sexo}" id="sexo">
+				    <option value="" disabled selected>Selecione</option>
+					<option value="MASCULINO" th:text="Masculino"/>
+					<option value="FEMENINO" th:text="Femenino" />
+				</select>
+			</div>
+			<div class=" col s4">
+				<label for="file" class="active">Curriculo:</label>
+				<input type="file" id="file" name="file" class="file-field input-field">
+			</div>
+		</div>
+		<div class="row">
+			<div class="input-field col s6">
+				<label for="cep" class="active">CEP:</label>
+				<input name="cep" th:field="*{cep}" id="cep" type="text" class="validate"
+				placeholder="Informe um cep válido">
+			</div>
+			<div class="input-field col s6">
+				<label for="rua" class="active">Rua:</label>
+				<input name="rua" th:field="*{rua}" id="rua" type="text" class="validate">
+			</div>
+		</div>
+		<div class="row">
+			<div class="input-field col s6">
+				<label for="bairro" class="active">Bairro:</label>
+				<input name="bairro" th:field="*{bairro}" id="bairro" type="text" class="validate">
+			</div>
+			<div class="input-field col s6">
+				<label for="cidade" class="active">Cidade:</label>
+				<input name="cidade" th:field="*{cidade}" id="cidade" type="text" class="validate">
+			</div>
+		</div>
+		<div class="row">
+			<div class="input-field col s6">
+				<label for="uf" class="active">UF:</label>
+				<input name="uf" th:field="*{uf}" id="uf" type="text" class="validate">
+			</div>
+			<div class="input-field col s6">
+				<label for="ibge" class="active">Ibge:</label>
+				<input name="ibge" th:field="*{ibge}" id="ibge" type="text" class="validate">
+			</div>
+		</div>
+		<div class="row">
+		<div class="input-field col s4">
+			<label for="dataNascimento" class="active">Data de Nascimento</label>
+			<input type="date" id="dataNascimento" name="dataNascimento" th:field="*{dataNascimento}"
+			placeholder="Informe a Data de nascimento">
+		</div>
+			<div class="input-field col s4">
+				<label for="profissao" class="active">Profissão</label>
+				<select class="browser-default" id="profissao" th:field="*{profissao.id}">
+					<option value="" disabled selected>Selecione a profissão</option>
+					<option th:each = "p :${profissoes}" th:value="${p.id}" th:text="${p.nome}"
+					th:selected="${p.id}"/>
+				
+				</select>
+			</div>
+			<div class="input-field col s4">
+				<label for="cargo" class="active">Cargo</label>
+				<select class="browser-default" th:field="*{cargo}"id="cargo">
+					<option value="" selected="selected" disabled>Selecione o Cargo</option>
+					<option th:each="c : ${T(com.ludmylla.spring.boot.model.Cargo).values()}"
+					th:value="${c.valor}" th:text="${c.nome}" th:selected="${c}"/>
+				</select>
+			</div>
+		</div>
+		<br/>
+		<div class="row center">
+			<div class="center">
+			<div class="col s2">
+			</div>
+			<div class="col s2">
+				<input id="btnSalvar" type="submit" value="Salvar" class="waves-effect waves-light btn">			
+			</div>
+			<div class="col s2">
+				<button id="btnNovo" class="waves-effect waves-light btn" 
+				onclick="document.getElementById('formPessoa').reset();">Novo</button>
+			</div>
+			
+			<div class="col s4">
+				<a style="font-size: 0.9em;color: white;padding-left: 10px;" href="/listapessoas" 
+				class="waves-effect waves-light btn">Lista de Pessoas
+					<i class="material-icons md-24">list</i>
+				</a>
+			
+			</div>
+	
+			
+			</div>
+		</div>
+	</form>
+	<br/>	
+	<br/>
+	<fieldset style="border: 1px solid #e0e0e0;">
+		<legend style="color: #26a69a;">Campo de Pesquisa</legend>
+		<div class="row">
+			<form id="formPesquisa" class="center" action="pesquisarpessoa" method="post">
+				<div class="row">					
+					<div class="input-field  col s5">
+						<label for="nomepequisa" class="active">Pesquisar por nome:</label>
+						<input id="nomepequisa" name="nomepequisa" class="validate" type="text"
+						th:value=${nomepequisa}>						
+					</div>
+					<div class="col s2">
+						<label for="pesquisaSexo" class="active">Pesquisa sexo:</label>
+						<select class="browser-default" name="pesquisaSexo" id="pesquisaSexo">
+							<option value="">Todos</option>
+							<option value="MASCULINO" th:text="Masculino"/>
+							<option value="FEMENINO" th:text="Femenino"/>
+						</select>
+					</div>
+					<div class="col s2">
+						<input id="btnBuscar" type="submit" value="Buscar" 
+						class="waves-effect waves-light btn" onclick="document.getElementById('formPesquisa').method = 'post'"
+						style="margin-top: 35px;">
+					</div>
+					<div class="col s2">
+						<input id="btnRelatorio" type="submit" value="Gerar Relátorio"  
+							onclick="document.getElementById('formPesquisa').method = 'get'"
+						    class="waves-effect waves-light btn"style="margin-top: 35px;">
+					</div>
+				</div>		
+			</form>	
+		</div>
+	</fieldset>
+	<br/>
+	<br/>	
+	
+	<br/>
+	<br/>
+	<form id="formLista center">
+	<table class="center highlight">
+		<thead>
+	          <tr>
+	              <th>Id</th>
+	              <th>Nome</th>
+	              <th>Sobrenome</th>
+	              <th>Curriculo</th>
+	              <th>Rua</th>
+	              <th>Cidade</th>
+	              <th>Fone</th>
+	              <th>Editar</th>
+	              <th>Excluir</th>
+	          </tr>
+        </thead>
+		<tbody>
+			<tr th:each = "pessoa : ${pessoas.content}">
+				<td th:text = "${pessoa.id}"></td>
+				<td th:text = "${pessoa.nome}"></td>
+				<td th:text = "${pessoa.sobrenome}"></td>
+				<td><a th:if="${pessoa.curriculo != null}" th:href="@{/downloadCurriculo/{idpessoa}(idpessoa=${pessoa.id})}">
+				<i class="material-icons">file_download</i>Download</a>
+					<a th:if="${pessoa.curriculo == null}" 
+					style="text-decoration: none; color:#ef5350;"><i class="material-icons">close</i>Não existe</a>
+				</td>
+				<td th:text = "${pessoa.rua}"></td>
+				<td th:text = "${pessoa.cidade}"></td>
+				
+				<td><a th:href="@{/telefones/{idpessoa}(idpessoa=${pessoa.id})}"
+				style="background-color:#757575; color: white; padding: 3px; 
+				border-radius: 3px;">Telefone</a></td>
+				
+				<td><a th:href="@{/editarpessoa/{idpessoa}(idpessoa=${pessoa.id})}"
+				style="background-color:#42a5f5; color: white; padding: 3px; 
+				border-radius: 3px;">Editar</a></td>
+				
+				<td><a th:href="@{/excluirpessoa/{idpessoa}(idpessoa=${pessoa.id})}" 
+				style="background-color:#ef5350; color: white; padding: 3px; 
+				border-radius: 3px;">Excluir</a></td>
+			</tr>
+		 </tbody>
+	</table>
+	<div class="row center" style="margin-top: 30px;">
+		<div class="pagination">
+			
+			<span th:if="${pessoas.hasPrevious()}">
+				<a th:href="@{/pessoaspag(page=${pessoas.number-1}, size=${pessoas.size}, nomepequisa=${nomepequisa})}"><i class="material-icons">chevron_left</i></a>
+			</span>
+				
+			<div class="waves-effect">
+				<th:block th:each="i: ${#numbers.sequence(0, pessoas.totalPages - 1)}">
+					<a th:href="@{/pessoaspag(page=${i}, size=${pessoas.size}, nomepequisa=${nomepequisa})}">[[ ${i} + 1 ]]</a>
+				</th:block>
+			</div>
+				
+			<span th:if="${pessoas.hasNext()}">
+				<a th:href="@{/pessoaspag(page=${pessoas.number+1}, size=${pessoas.size}, nomepequisa=${nomepequisa})}"><i class="material-icons">chevron_right</i></a>
+			</span>		
+			
+		</div>		
+	</div>
+	</form>
+	</div>
+	<!-- Adicionando Javascript -->
+    <script>
+
+        $(document).ready(function() {
+
+            function limpa_formulário_cep() {
+                // Limpa valores do formulário de cep.
+                $("#rua").val("");
+                $("#bairro").val("");
+                $("#cidade").val("");
+                $("#uf").val("");
+                $("#ibge").val("");
+            }
+            
+            //Quando o campo cep perde o foco.
+            $("#cep").blur(function() {
+
+                //Nova variável "cep" somente com dígitos.
+                var cep = $(this).val().replace(/\D/g, '');
+
+                //Verifica se campo cep possui valor informado.
+                if (cep != "") {
+
+                    //Expressão regular para validar o CEP.
+                    var validacep = /^[0-9]{8}$/;
+
+                    //Valida o formato do CEP.
+                    if(validacep.test(cep)) {
+
+                        //Preenche os campos com "..." enquanto consulta webservice.
+                        $("#rua").val("...");
+                        $("#bairro").val("...");
+                        $("#cidade").val("...");
+                        $("#uf").val("...");
+                        $("#ibge").val("...");
+
+                        //Consulta o webservice viacep.com.br/
+                        $.getJSON("https://viacep.com.br/ws/"+ cep +"/json/?callback=?", function(dados) {
+
+                            if (!("erro" in dados)) {
+                                //Atualiza os campos com os valores da consulta.
+                                $("#rua").val(dados.logradouro);
+                                $("#bairro").val(dados.bairro);
+                                $("#cidade").val(dados.localidade);
+                                $("#uf").val(dados.uf);
+                                $("#ibge").val(dados.ibge);
+                            } //end if.
+                            else {
+                                //CEP pesquisado não foi encontrado.
+                                limpa_formulário_cep();
+                                alert("CEP não encontrado.");
+                            }
+                        });
+                    } //end if.
+                    else {
+                        //cep é inválido.
+                        limpa_formulário_cep();
+                        alert("Formato de CEP inválido.");
+                    }
+                } //end if.
+                else {
+                    //cep sem valor, limpa formulário.
+                    limpa_formulário_cep();
+                }
+            });
+
+        });
+        
+       /* $('#dataNascimento').datepicker({
+    		showOthermonths:true,
+    		format:'yyyy-mm-dd';
+    		
+    	});*/
+
+    </script>	
+	
+</body>
+</html>

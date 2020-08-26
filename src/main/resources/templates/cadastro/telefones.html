@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+	<link href="https://fonts.googleapis.com/css2?family=PT+Sans&display=swap" rel="stylesheet">
+	
+	
+	<!--  <script type="text/javascript" src="/js/jquery.mask.min.js"></script>
+	<script type="text/javascript" src="/js/script.js"></script>-->
+
+
+	<title>Cadastro de Telefones</title>
+	
+</head>
+<body>
+<div class="container">
+	<nav class="navbar">
+		<div class="nav-wrapper col s10">
+			<a href="#" class="brand-logo">
+				<img alt="logo" src="/img/logo.png" width="90" height="70"></img>
+			</a>
+			<ul id="nav-mobile" class="right hide-on-med-and-down">
+				<li><a href="index">Inicio</a></li>
+				<li><a href="/cadastropessoa">Cadastro de Usuário</a></li>			
+			</ul>
+			<h5 id="titulo">Spring Boot + Thymeleaf + Material Design Lite</h5>
+		</div>	
+	</nav>
+	<br/>
+	<br/>
+	
+<!-- msg msg-error z-depth-3 scale-transition col s6 -->
+	
+	
+	
+		<div class="msg" th:each="m : ${msg}">
+			<span th:text="${m}"></span>
+		</div>
+	
+
+	
+		<!--  <div class="col s4" th:each="m : ${msg}" style="color:#e53935; font-size: 1em; ">	
+			<span th:text="${m}"></span>
+		</div>	-->
+	<br/>
+	<br/>
+	<h5 class="center tituloCad" >Cadastro de Telefones</h5>
+	<br/>
+	<div class="row s12 m6">
+		<div class="col s4">
+		</div>
+		<div class="card #e3f2fd blue lighten-5 col s4">
+	        <div class="card-content">
+	          <span class="center card-title">Dados:</span>
+	         	<div class="center infPessoa" th:each="p: ${pessoaobj}">
+					<label><p>ID: <span th:text="${p.id}"></span></p></label>
+					<label><p>Nome: <span th:text="${p.nome}"></span></p></label>
+					<label><p>Sobrenome: <span th:text="${p.sobrenome}"></span></p></label>	
+					<label><p>Idade: <span th:text="${p.idade}"></span></p></label>		
+				</div>
+	        </div>
+      </div>
+      <div class="col s4">
+		</div>
+   </div>	
+
+	<br/>	
+	<br/>
+	<h3>Telefones</h3>	
+	<br/>
+		<span id="message"></span>
+		
+	<br/>
+	<form th:action="@{/addfonepessoa/{pessoaid}(pessoaid=${pessoaobj.id})}" method="post" class="col s12" id="formTelefone" 
+	th:object="${telefoneobj}" onsubmit="return validarCampos()? true : false;">
+	
+		
+		<div class="row">
+			<div class="col s6">
+				<label class="active" for="id">Id:</label>
+				<input  id="id" name="id" class="validate" readonly="readonly"/>
+			</div>
+			
+		</div>
+		<div class="row">	
+			<div class="col s6">
+				<label class="active" for="numero">Número</label>
+				<input  id="numero" name="numero" class="validate"    
+				onkeypress="mask(this, mphone);" onblur="mask(this, mphone);"/>
+			</div>
+			
+		 
+			 <div class="col s6">
+				<label for="tipo">Tipo</label>
+				<select name="tipo" id="tipo" form="formTelefone"  >
+					<option value="" disabled selected>Selecione</option>
+					<option value="Celular">Celular</option>
+					<option value="Recado">Recado</option>
+					<option value="Whatsapp">Whatsapp</option>
+					<option value="Casa">Casa</option>
+					<option value="Comercial">Comercial</option>
+				
+				</select>
+			</div>
+		
+			<div class="center col s4">
+				<input type="submit" value="Adicionar" class="waves-effect waves-light btn" style="font-size: 0.6em;"/>
+			</div>
+		</div>
+		
+	</form>
+	<br/>
+	<br/>
+	<form id="listaTelefones" action="" class="center">
+		<table class="center highlight">
+			<thead>
+				<tr>
+					<th>Id</th>
+					<th>Número</th>
+					<th>Tipo</th>
+					<th>Excluir</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="fone : ${telefones}">
+					<td th:text="${fone.id}"></td>
+					<td th:text="${fone.numero}"></td>
+					<td th:text="${fone.tipo}"></td>
+					<td><a th:href="@{/excluirtelefone/{idtelefone}(idtelefone=${fone.id})}">Excluir</a></td>
+					<td><a th:href="@{/editartelefone/{idtelefone}(idtelefone=${fone.id})}">Editar</a></td>
+				</tr>
+
+			</tbody>
+		</table>
+
+	</form>
+	</div>
+	
+	
+	
+	<script type="text/javascript">
+	
+	/*Necessário Para o funcionamento do select tipo*/
+	document.addEventListener('DOMContentLoaded', function() {
+	    var elems = document.querySelectorAll('select');
+	    var instances = M.FormSelect.init(elems, options);
+	  });
+
+	  // Or with jQuery
+
+	 $(document).ready(function(){
+	    $('select').formSelect();
+	 });
+	
+	
+	
+	setTimeout(function() {
+		$('.msg').html("").hide();},3000);	
+	
+	function validarCampos(){
+
+		numero = document.getElementById('numero').value;
+		tipo = document.getElementById('tipo').value;
+		
+		if(numero == ''){
+
+			$('#message').html('<div role="alert">Número deve ser informado!</div>');
+			formTelefone.numero.focus();
+			return false;
+			
+		}else if(tipo == ''){
+			$('#message').html('<div role="alert">Tipo deve ser informado!</div>');
+			formTelefone.tipo.focus();
+			return false;
+			
+		}
+		
+		return true;
+	}
+	
+	/*Mascara para celular e fixo*/
+	function mask(o, f) {
+		  setTimeout(function() {
+		    var v = mphone(o.value);
+		    if (v != o.value) {
+		      o.value = v;
+		    }
+		  }, 1);
+		}
+
+		function mphone(v) {
+		  var r = v.replace(/\D/g, "");
+		  r = r.replace(/^0/, "");
+		  if (r.length > 10) {
+		    r = r.replace(/^(\d\d)(\d{5})(\d{4}).*/, "($1) $2-$3");
+		  } else if (r.length > 5) {
+		    r = r.replace(/^(\d\d)(\d{4})(\d{0,4}).*/, "($1) $2-$3");
+		  } else if (r.length > 2) {
+		    r = r.replace(/^(\d\d)(\d{0,5})/, "($1) $2");
+		  } else {
+		    r = r.replace(/^(\d*)/, "($1");
+		  }
+		  return r;
+		}
+
+		
+	
+	
+	</script>
+	 
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+
+	<title>Insert title here</title>
+	
+	<style type="text/css">
+		form input[type="submit"]{
+			color: white;
+		}
+		
+		h6.titleLogin{
+			flex-direction: row;
+		    margin-top: 10%;
+		    display: flex;
+		    justify-content: center;
+		    align-items: center;
+		    margin-bottom: 3%;
+		}
+		
+		
+	</style>
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<form class="col s12" th:action="@{/login}" method="post">
+				<h6 class="titleLogin light-blue-text">Acesso ao sistema</h6>
+				<div class="row">
+					<div class="input-field col s4">						
+					</div>		
+					<div class="input-field col s4">
+						<label for="username" class="active">Login:</label>
+						<input id="username" name="username" type="text" class="validate">
+					</div>	
+					<div class="input-field col s4">						
+					</div>				
+				</div>
+				<div class="row">
+					<div class="input-field col s4">						
+					</div>	
+					<div class="input-field col s4">
+						<label for="password" class="active">Senha:</label>
+						<input id="password" name="password" type="password" class="validate">
+					</div>
+					<div class="input-field col s4">						
+					</div>
+				</div>
+				<div class="row">
+					<div class="input-field col s4">						
+					</div>
+					<div class="col s4">
+						<input name="logar" type="submit" value="Acessar" 
+							class="waves-effect waves-light btn-large light-blue" style="font-size: 1.2em;">
+					</div>
+					<div class="input-field col s4">						
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+</html>
